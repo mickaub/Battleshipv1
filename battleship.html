@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Javascript Tester BoilerPlate
+</title>
+<meta charset="UFT-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+</head>
+<style>
+</style>
+<body>
+    <div id="TestSite"></div>   
+    <button onclick="insert(0)">1</button> 
+    <button onclick="insert(1)">2</button>
+    <button onclick="insert(2)">3</button>
+    <button onclick="insert(3)">4</button>
+    <button onclick="insert(4)">5</button>
+    <button onclick="insert(5)">6</button>
+    <button onclick="insert(6)">7</button>
+    <button onclick="insert(7)">8</button>
+    <button onclick="insert(8)">9</button>
+    <button onclick="insert(9)">10</button> 
+    <div id="sunk">-</div>
+    <div id="computerView"></div>
+</body>
+<script>
+    let text = new String;
+    let array = [];
+    let compView = [];    
+    for (let i=0;i<10;i++){
+        array.push(0);
+    }
+    let compOrder = [];
+    for (let i=0;i<10;i++){
+        compOrder.push(i);
+    }
+    
+    text = array;
+    compView = array.slice(0);
+    let randomTarget = compOrder.slice(0);
+
+    var shuffle = function (array) {
+
+        var currentIndex = array.length;
+        var temporaryValue, randomIndex;
+
+        // While there remain elements to shuffle...
+        while (0 !== currentIndex) {
+            // Pick a remaining element...
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex -= 1;
+            // And swap it with the current element.
+            temporaryValue = array[currentIndex];
+            array[currentIndex] = array[randomIndex];
+            array[randomIndex] = temporaryValue;
+        }
+        //console.log(array);
+        };
+
+    function insert(num){
+        //randomised both computer and human targets
+        let targets = randomTarget.slice(0,4);
+        let pt1 = targets[0];
+        let pt2 = targets[1];
+        let ct1 = targets[2];
+        let ct2 = targets[3];
+        console.log(targets);
+
+        let draw = 0;
+        text[num] = 1;    
+        document.getElementById("TestSite").innerHTML = text;
+
+        let random = compOrder[0];
+        compView[random] = 1;
+        document.getElementById("computerView").innerHTML = compView;
+        compOrder.shift();
+        //alerts player the computer is close to victory
+        if(compView[ct1] == 1 || compView[ct2] == 1){
+            document.getElementById("sunk").innerHTML = "uh-oh";
+        }
+
+        if(text[pt1] == 1 && text[pt2] == 1){
+            document.getElementById("sunk").innerHTML = "Comp got sunk";
+            draw = draw + 1;
+        }
+
+        if(compView[ct1] == 1 && compView[ct2] == 1){
+            document.getElementById("sunk").innerHTML = "You got sunk";
+            draw = draw + 1;
+        }
+        //if there is draw, no winner is declared
+        if(draw == 2){
+            document.getElementById("sunk").innerHTML = "No Winner";
+        }
+    }
+    /*
+    Allow selection of divs to place items on
+    Click divs to destroy/hit
+    Make computer choose divs to hit
+    have total destruction equal win
+    */
+    document.getElementById("TestSite").innerHTML = text;
+    document.getElementById("computerView").innerHTML = text;
+    shuffle(compOrder);
+    shuffle(randomTarget);
+
+    console.log(randomTarget);
+
+
+
+
+</script>
+</html>
