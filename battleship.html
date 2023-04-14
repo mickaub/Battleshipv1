@@ -7,8 +7,21 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 </head>
 <style>
+    .TileDiv{        
+        width: 400px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .tile{
+        height: 38px;
+        width: 38px;
+        border: solid 1px darkblue;
+        background-color: aqua;
+    }
 </style>
 <body>
+    <h2>Computer Tiles</h2>
+    <div id="PlayerTiles" class="TileDiv"></div>
     <div id="TestSite"></div>   
     <button onclick="insert(0)">1</button> 
     <button onclick="insert(1)">2</button>
@@ -19,20 +32,49 @@
     <button onclick="insert(6)">7</button>
     <button onclick="insert(7)">8</button>
     <button onclick="insert(8)">9</button>
-    <button onclick="insert(9)">10</button> 
+    <button onclick="insert(9)">10</button>
+    <div id="extraButtons"></div> 
     <div id="sunk">-</div>
     <div id="computerView"></div>
+    <div id="ComputerTiles" class="TileDiv"></div>
+    <h2>Player Tiles</h2>
 </body>
 <script>
     let text = new String;
     let array = [];
     let compView = [];    
-    for (let i=0;i<10;i++){
+    for (let i=0;i<20;i++){
         array.push(0);
     }
     let compOrder = [];
-    for (let i=0;i<10;i++){
+    for (let i=0;i<20;i++){
         compOrder.push(i);
+    }
+    let playerTiles = document.getElementById("PlayerTiles");
+    let ComputerTiles = document.getElementById("ComputerTiles");
+    for (let i=0;i<20;i++){
+        let tile = document.createElement('div');
+        tile.classList.add('tile')
+        tile.id = i;
+        playerTiles.append(tile);        
+    }
+    for (let i=0;i<20;i++){
+        let tile = document.createElement('div');
+        tile.classList.add('tile')
+        tile.id = "C" + i;
+        ComputerTiles.append(tile);        
+    }
+    let extraButtons = document.getElementById("extraButtons");
+    for (let i=0;i<10;i++){       
+        let nbv = i + 11;
+        let nbfv = i + 10;
+        let newButton = document.createElement('button');
+        newButton.innerHTML = nbv;
+        newButton.id = "nB" + nbv;        
+        newButton.onclick = function (){            
+            insert(nbfv);
+        };
+        extraButtons.append(newButton);
     }
     
     text = array;
@@ -77,6 +119,20 @@
         //alerts player the computer is close to victory
         if(compView[ct1] == 1 || compView[ct2] == 1){
             document.getElementById("sunk").innerHTML = "uh-oh";
+            if(compView[ct1] == 1){
+                document.getElementById(`C${ct1}`).style.backgroundColor = "red";
+            }
+            if(compView[ct2] == 1){
+                document.getElementById(`C${ct2}`).style.backgroundColor = "red";
+            }
+        }
+
+        if(text[pt1] == 1){
+            document.getElementById(`${pt1}`).style.backgroundColor = "red";
+        }
+
+        if(text[pt2] == 1){
+            document.getElementById(`${pt2}`).style.backgroundColor = "red";
         }
 
         if(text[pt1] == 1 && text[pt2] == 1){
@@ -101,13 +157,13 @@
     */
     document.getElementById("TestSite").innerHTML = text;
     document.getElementById("computerView").innerHTML = text;
+    /*for (let i=11;i<21;i++){
+        document.getElementById(`nB${i}`).onclick = insert(i);
+    }*/
     shuffle(compOrder);
     shuffle(randomTarget);
 
     console.log(randomTarget);
-
-
-
 
 </script>
 </html>
