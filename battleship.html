@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>Javascript Tester BoilerPlate
+<title>Battleship Game
 </title>
 <meta charset="UFT-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0" />
@@ -19,10 +19,10 @@
         background-color: aqua;
     }
 </style>
-<body>
+<body> <!--allComputerTiles to PlayTiles-->
     <h2>Computer Tiles</h2>
-    <div id="PlayerTiles" class="TileDiv"></div>
-    <div id="TestSite"></div>   
+    <div id="CompTiles" class="TileDiv"></div>
+    <div id="PlayerHits"></div>   
     <button onclick="insert(0)">1</button> 
     <button onclick="insert(1)">2</button>
     <button onclick="insert(2)">3</button>
@@ -36,36 +36,47 @@
     <div id="extraButtons"></div> 
     <div id="sunk">-</div>
     <div id="computerView"></div>
-    <div id="ComputerTiles" class="TileDiv"></div>
+    <div id="PlayTiles" class="TileDiv"></div>
     <h2>Player Tiles</h2>
+    <!--placeFirst,second,third,fourth,fith then start-->
+    <button onclick="start()">Start</button>
+    <br>
+    <button onclick="move(-10)">Up</button>
+    <br>
+    <button onclick="move(-1)">Left</button>
+    <button onclick="move(1)">Right</button>
+    <br>
+    <button onclick="move(10)">Down</button>
 </body>
 <script>
+    let size = 100;
+    let newbuttonsize = size-10;
     let text = new String;
     let array = [];
     let compView = [];    
-    for (let i=0;i<20;i++){
+    for (let i=0;i<size;i++){
         array.push(0);
     }
     let compOrder = [];
-    for (let i=0;i<20;i++){
+    for (let i=0;i<size;i++){
         compOrder.push(i);
     }
-    let playerTiles = document.getElementById("PlayerTiles");
-    let ComputerTiles = document.getElementById("ComputerTiles");
-    for (let i=0;i<20;i++){
+    let compTiles = document.getElementById("CompTiles");
+    let playTiles = document.getElementById("PlayTiles");
+    for (let i=0;i<size;i++){
         let tile = document.createElement('div');
         tile.classList.add('tile')
         tile.id = i;
-        playerTiles.append(tile);        
+        compTiles.append(tile);        
     }
-    for (let i=0;i<20;i++){
+    for (let i=0;i<size;i++){
         let tile = document.createElement('div');
         tile.classList.add('tile')
         tile.id = "C" + i;
-        ComputerTiles.append(tile);        
+        playTiles.append(tile);        
     }
     let extraButtons = document.getElementById("extraButtons");
-    for (let i=0;i<10;i++){       
+    for (let i=0;i<newbuttonsize;i++){       
         let nbv = i + 11;
         let nbfv = i + 10;
         let newButton = document.createElement('button');
@@ -73,8 +84,32 @@
         newButton.id = "nB" + nbv;        
         newButton.onclick = function (){            
             insert(nbfv);
-        };
-        extraButtons.append(newButton);
+        }
+        extraButtons.append(newButton);   
+        if ((i+1)%10 == 0){
+        let newLine = document.createElement("br");
+        extraButtons.append(newLine);}
+    }
+    let startS = 0;
+    let ps1 = 0;
+    let ps2 = ps1+1;
+    document.getElementById(`C${ps1}`).style.backgroundColor = "orange";
+    document.getElementById(`C${ps2}`).style.backgroundColor = "orange";
+
+    function move(num){
+        if ((ps1 + num)<=-1 || (ps1+num)>=(size-1) || startS>0){
+            return;
+        }
+        document.getElementById(`C${ps1}`).style.backgroundColor = "aqua";
+        document.getElementById(`C${ps2}`).style.backgroundColor = "aqua";
+    
+        ps1 += num;
+        ps2 = ps1 + 1;
+    
+        document.getElementById(`C${ps1}`).style.backgroundColor = "orange";
+        document.getElementById(`C${ps2}`).style.backgroundColor = "orange";
+        console.log(ps1)
+        console.log(ps2)
     }
     
     text = array;
@@ -99,48 +134,67 @@
         //console.log(array);
         };
 
+    function start(){
+            if(startS!==1){
+            startS = 1;
+            }
+        console.log(startS);
+        }
+
     function insert(num){
+        
         //randomised both computer and human targets
-        let targets = randomTarget.slice(0,4);
-        let pt1 = targets[0];
-        let pt2 = targets[1];
-        let ct1 = targets[2];
-        let ct2 = targets[3];
+        let targets = randomTarget.slice(0,1);
+        let cs1 = targets[0];
+        let cs2 = cs1 + 1;
+        //let ps1 = targets[2];
+        //let ps2 = targets[3];
         console.log(targets);
 
+       // document.getElementById(`C${ps1}`).style.backgroundColor = "orange";
+       // document.getElementById(`C${ps2}`).style.backgroundColor = "orange";
+
+        //if(num != true){
+           // return;
+       // }
+        
         let draw = 0;
         text[num] = 1;    
-        document.getElementById("TestSite").innerHTML = text;
+        document.getElementById("PlayerHits").innerHTML = text;
+
+        document.getElementById(`${num}`).style.backgroundColor = "grey";
 
         let random = compOrder[0];
         compView[random] = 1;
         document.getElementById("computerView").innerHTML = compView;
         compOrder.shift();
+
+        document.getElementById(`C${random}`).style.backgroundColor = "grey";
         //alerts player the computer is close to victory
-        if(compView[ct1] == 1 || compView[ct2] == 1){
+        if(compView[ps1] == 1 || compView[ps2] == 1){
             document.getElementById("sunk").innerHTML = "uh-oh";
-            if(compView[ct1] == 1){
-                document.getElementById(`C${ct1}`).style.backgroundColor = "red";
+            if(compView[ps1] == 1){
+                document.getElementById(`C${ps1}`).style.backgroundColor = "red";
             }
-            if(compView[ct2] == 1){
-                document.getElementById(`C${ct2}`).style.backgroundColor = "red";
+            if(compView[ps2] == 1){
+                document.getElementById(`C${ps2}`).style.backgroundColor = "red";
             }
         }
 
-        if(text[pt1] == 1){
-            document.getElementById(`${pt1}`).style.backgroundColor = "red";
+        if(text[cs1] == 1){ //cs means computers ship which gets hit
+            document.getElementById(`${cs1}`).style.backgroundColor = "red";
         }
 
-        if(text[pt2] == 1){
-            document.getElementById(`${pt2}`).style.backgroundColor = "red";
+        if(text[cs2] == 1){
+            document.getElementById(`${cs2}`).style.backgroundColor = "red";
         }
 
-        if(text[pt1] == 1 && text[pt2] == 1){
+        if(text[cs1] == 1 && text[cs2] == 1){
             document.getElementById("sunk").innerHTML = "Comp got sunk";
             draw = draw + 1;
         }
 
-        if(compView[ct1] == 1 && compView[ct2] == 1){
+        if(compView[ps1] == 1 && compView[ps2] == 1){ //ps is player ship which gets hit by computer
             document.getElementById("sunk").innerHTML = "You got sunk";
             draw = draw + 1;
         }
@@ -151,11 +205,11 @@
     }
     /*
     Allow selection of divs to place items on
-    Click divs to destroy/hit
-    Make computer choose divs to hit
-    have total destruction equal win
+    Click divs to destroy/hit DONE
+    Make computer choose divs to hit DONE
+    have total destruction equal win DONE
     */
-    document.getElementById("TestSite").innerHTML = text;
+    document.getElementById("PlayerHits").innerHTML = text;
     document.getElementById("computerView").innerHTML = text;
     /*for (let i=11;i<21;i++){
         document.getElementById(`nB${i}`).onclick = insert(i);
