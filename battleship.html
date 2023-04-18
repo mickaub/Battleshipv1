@@ -40,6 +40,7 @@
     <h2>Player Tiles</h2>
     <!--placeFirst,second,third,fourth,fith then start-->
     <button onclick="start()">Start</button>
+    <button onclick="next()">Next</button>
     <br>
     <button onclick="move(-10)">Up</button>
     <br>
@@ -91,27 +92,61 @@
         extraButtons.append(newLine);}
     }
     let startS = 0;
-    let ps1 = 0;
-    let ps2 = ps1+1;
-    document.getElementById(`C${ps1}`).style.backgroundColor = "orange";
-    document.getElementById(`C${ps2}`).style.backgroundColor = "orange";
+
+    let pdes1 = 5;
+    let pdes2 = pdes1+1;
+    let pcar1 = 0;
+    let pcar2 = 1;
+    let pcar3 = 2;
+    let pcar4 = 3;
+    let pcar5 = 4;
+
+    document.getElementById(`C${pcar1}`).style.backgroundColor = "orange";
+    document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+    document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+    document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+    document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";    
 
     function move(num){
-        if ((ps1 + num)<=-1 || (ps1+num)>=(size-1) || startS>0){
+        if (shipNum == 5){
+            if ((pcar1 + num)<=-1 || (pcar1+num-5)>=(size-1) || startS>0){
+            return;
+            }
+            document.getElementById(`C${pcar1}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+        
+            pcar1 += num;
+            pcar2 = pcar1 + 1;
+            pcar3 = pcar2 +1;
+            pcar4 = pcar3 +1;
+            pcar5 = pcar4 + 1;
+        
+            document.getElementById(`C${pcar1}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            }
+        
+        if (shipNum == 1){
+            if((pdes1 + num)<=-1 || (pdes1+num)>=(size-1) || startS>0){
             return;
         }
-        document.getElementById(`C${ps1}`).style.backgroundColor = "aqua";
-        document.getElementById(`C${ps2}`).style.backgroundColor = "aqua";
+        document.getElementById(`C${pdes1}`).style.backgroundColor = "aqua";
+        document.getElementById(`C${pdes2}`).style.backgroundColor = "aqua";
     
-        ps1 += num;
-        ps2 = ps1 + 1;
+        pdes1 += num;
+        pdes2 = pdes1 + 1;
     
-        document.getElementById(`C${ps1}`).style.backgroundColor = "orange";
-        document.getElementById(`C${ps2}`).style.backgroundColor = "orange";
-        console.log(ps1)
-        console.log(ps2)
+        document.getElementById(`C${pdes1}`).style.backgroundColor = "orange";
+        document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";
+       // console.log(pdes1)
+       // console.log(pdes2)
     }
-    
+}
     text = array;
     compView = array.slice(0);
     let randomTarget = compOrder.slice(0);
@@ -133,23 +168,54 @@
         }
         //console.log(array);
         };
+    
+    let shipNum = 5;
 
-    function start(){
-            if(startS!==1){
+    function next(){
+        if(shipNum == 0){
+            return;
+        }
+        shipNum -= 1;
+        if(shipNum ==1){
+            document.getElementById(`C${pdes1}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";
+        }
+        console.log(shipNum);
+    }
+
+    function start(){ //only start if no ships overlap and all five ships are placed
+            if(startS!==1 && shipNum == 1){
             startS = 1;
             }
         console.log(startS);
         }
+    
+    let fired = [];
 
     function insert(num){
-        
+        if(startS !== 1){
+            return;
+        }
+               
+
+        if(fired.length>1){
+        for(let i=0;i<fired.length;i++){
+            if(fired[i]==num){
+                return;
+            }
+        }
+        }
+
+        fired.push(num);
+
+       // console.log(fired);
         //randomised both computer and human targets
         let targets = randomTarget.slice(0,1);
         let cs1 = targets[0];
         let cs2 = cs1 + 1;
         //let ps1 = targets[2];
         //let ps2 = targets[3];
-        console.log(targets);
+        //console.log(targets);
 
        // document.getElementById(`C${ps1}`).style.backgroundColor = "orange";
        // document.getElementById(`C${ps2}`).style.backgroundColor = "orange";
@@ -171,13 +237,13 @@
 
         document.getElementById(`C${random}`).style.backgroundColor = "grey";
         //alerts player the computer is close to victory
-        if(compView[ps1] == 1 || compView[ps2] == 1){
+        if(compView[pdes1] == 1 || compView[pdes2] == 1){ //add pcar to all pdes conditions to 263
             document.getElementById("sunk").innerHTML = "uh-oh";
-            if(compView[ps1] == 1){
-                document.getElementById(`C${ps1}`).style.backgroundColor = "red";
+            if(compView[pdes1] == 1){
+                document.getElementById(`C${pdes1}`).style.backgroundColor = "red";
             }
-            if(compView[ps2] == 1){
-                document.getElementById(`C${ps2}`).style.backgroundColor = "red";
+            if(compView[pdes2] == 1){
+                document.getElementById(`C${pdes2}`).style.backgroundColor = "red";
             }
         }
 
@@ -194,7 +260,7 @@
             draw = draw + 1;
         }
 
-        if(compView[ps1] == 1 && compView[ps2] == 1){ //ps is player ship which gets hit by computer
+        if(compView[pdes1] == 1 && compView[pdes2] == 1){ //ps is player ship which gets hit by computer
             document.getElementById("sunk").innerHTML = "You got sunk";
             draw = draw + 1;
         }
@@ -205,15 +271,20 @@
     }
     /*
     Allow selection of divs to place items on
+    carrier 5, battleship 4, cruiser 3, submarine 3, destroyer 2
     Click divs to destroy/hit DONE
     Make computer choose divs to hit DONE
     have total destruction equal win DONE
+
+    L240-263 add cruiser to conditions
+    change playership values to array
+    add rotated option to placements
+    add all ships to computer ships
+    add all computer ships to player victory conditions
+    only start if no ships overlap and all five ships are placed
     */
     document.getElementById("PlayerHits").innerHTML = text;
-    document.getElementById("computerView").innerHTML = text;
-    /*for (let i=11;i<21;i++){
-        document.getElementById(`nB${i}`).onclick = insert(i);
-    }*/
+    document.getElementById("computerView").innerHTML = text;    
     shuffle(compOrder);
     shuffle(randomTarget);
 
