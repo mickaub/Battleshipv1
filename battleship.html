@@ -41,6 +41,7 @@
     <!--placeFirst,second,third,fourth,fith then start-->
     <button onclick="start()">Start</button>
     <button onclick="next()">Next</button>
+    <button onclick="flip()">Flip</button>
     <br>
     <button onclick="move(-10)">Up</button>
     <br>
@@ -55,8 +56,12 @@
     let text = new String;
     let array = [];
     let compView = [];    
+    let playerOverlap = [];
+    let compOverlap = [];
     for (let i=0;i<size;i++){
         array.push(0);
+        playerOverlap.push(0);
+        compOverlap.push(0);
     }
     let compOrder = [];
     for (let i=0;i<size;i++){
@@ -92,14 +97,17 @@
         extraButtons.append(newLine);}
     }
     let startS = 0;
-
-    let pdes1 = 5;
-    let pdes2 = pdes1+1;
+    
     let pcar1 = 0;
-    let pcar2 = 1;
+    let pcar2 = 1; //switch crusier and destoryer to array
     let pcar3 = 2;
     let pcar4 = 3;
     let pcar5 = 4;
+    let pbat = [5,6,7,8,9];
+    let pcru = [10,11,12];
+    let psub = [13,14,15];
+    let pdes1 = 16;
+    let pdes2 = 17;
 
     document.getElementById(`C${pcar1}`).style.backgroundColor = "orange";
     document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
@@ -145,8 +153,27 @@
         document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";
        // console.log(pdes1)
        // console.log(pdes2)
+        }
     }
-}
+    let LR = true;    
+    function flip(){
+        if (shipNum == 0){
+            return;
+        } 
+        /*if LR === true{
+        if shipNum > 1  {pcar1 = pacr0+10; pbat1=pbat0+10; pcru1=pcru0+10; psub1=psub0+10; psub2 = psub0+20; pdes1=pdes0=10}
+        if shipNum > 2 {pcar2 = pcar + 20; pbat2 = pbat +20; pcru2 = pcru+20; }
+        if shipNum > 3 {pcar3 = pcar0 +30; pbat3 = pbat0 +30}
+        if shipNum > 4 {pcar4 = pcar0+40}
+        LR === false;
+        return;        
+        }
+        if LR === false{ //finish
+            if shimNum > 3 {pcar3 = pcar0 + 3; pbat = pbat0+}
+            if shipNum > 4{pcar4 = pcar0+4}
+        }
+        */
+    }
     text = array;
     compView = array.slice(0);
     let randomTarget = compOrder.slice(0);
@@ -172,6 +199,15 @@
     let shipNum = 5;
 
     function next(){
+        /* 
+        let shipPlacement = [];        
+        for (let i=0;i<size;i++){
+        if shipPlacement
+        if (playerOverlap[i]>0){
+            return;
+        }
+        }
+        */
         if(shipNum == 0){
             return;
         }
