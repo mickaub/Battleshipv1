@@ -103,7 +103,7 @@
     let pcar3 = 2;
     let pcar4 = 3;
     let pcar5 = 4;
-    let pbat = [5,6,7,8,9];
+    let pbat = [5,6,7,8];
     let pcru = [10,11,12];
     let psub = [13,14,15];
     let pdes1 = 16;
@@ -127,10 +127,10 @@
             document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
         
             pcar1 += num;
-            pcar2 = pcar1 + 1;
-            pcar3 = pcar2 +1;
-            pcar4 = pcar3 +1;
-            pcar5 = pcar4 + 1;
+            pcar2 += num;
+            pcar3 += num;
+            pcar4 += num;
+            pcar5 += num;
         
             document.getElementById(`C${pcar1}`).style.backgroundColor = "orange";
             document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
@@ -157,9 +157,190 @@
     }
     let LR = true;    
     function flip(){
+        console.log(LR);
+        console.log(pcar1);
         if (shipNum == 0){
             return;
         } 
+        if(LR == true){
+            if(shipNum==5){
+            if(pcar1>55){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 += 9;
+            pcar3 += 18;
+            pcar4 += 27;
+            pcar5 += 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = false;            
+            return;
+        }
+        if(shipNum==4){
+            if(pcar1>55){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 += 9;
+            pcar3 += 18;
+            pcar4 += 27;
+            pcar5 += 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = false;            
+            return;
+        }
+        if(shipNum==3){
+            if(pcar1>55){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 += 9;
+            pcar3 += 18;
+            pcar4 += 27;
+            pcar5 += 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = false;            
+            return;
+        }
+        if(shipNum==2){
+            if(pcar1>55){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 += 9;
+            pcar3 += 18;
+            pcar4 += 27;
+            pcar5 += 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = false;            
+            return;
+        }
+        if(shipNum==1){
+            if(pdes1>88){
+                return;
+            }
+            document.getElementById(`C${pdes2}`).style.backgroundColor = "aqua";            
+            pdes2 += 9;            
+            document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";            
+            LR = false;            
+            return;
+        }
+
+        }
+        if(LR == false){          
+            if(shipNum == 5){ 
+            if(pcar1%10>5){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 -= 9;
+            pcar3 -= 18;
+            pcar4 -= 27;
+            pcar5 -= 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = true;
+            return;
+        }
+        if(shipNum == 4){//bat
+            if(pcar1%10>5){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 -= 9;
+            pcar3 -= 18;
+            pcar4 -= 27;
+            pcar5 -= 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = true;
+            return;
+        }
+        if(shipNum == 3){//cru
+            if(pcar1%10>5){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 -= 9;
+            pcar3 -= 18;
+            pcar4 -= 27;
+            pcar5 -= 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = true;
+            return;
+        }
+        if(shipNum == 2){//sub
+            if(pcar1%10>5){
+                return;
+            }
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            pcar2 -= 9;
+            pcar3 -= 18;
+            pcar4 -= 27;
+            pcar5 -= 36;
+            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            LR = true;
+            return;
+        }
+        if(shipNum == 1){//des
+            if(pdes1%10==9){
+                return;
+            }            
+            document.getElementById(`C${pdes2}`).style.backgroundColor = "aqua";    
+            pdes2 -= 9;                      
+            document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";            
+            LR = true;
+            return;
+        }//LR false
+    }
+    
+        
         /*if LR === true{
         if shipNum > 1  {pcar1 = pacr0+10; pbat1=pbat0+10; pcru1=pcru0+10; psub1=psub0+10; psub2 = psub0+20; pdes1=pdes0=10}
         if shipNum > 2 {pcar2 = pcar + 20; pbat2 = pbat +20; pcru2 = pcru+20; }
@@ -174,6 +355,7 @@
         }
         */
     }
+    
     text = array;
     compView = array.slice(0);
     let randomTarget = compOrder.slice(0);
@@ -212,6 +394,22 @@
             return;
         }
         shipNum -= 1;
+        if(shipNum ==4){
+            document.getElementById(`C${pbat[0]}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pbat[1]}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pbat[2]}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pbat[3]}`).style.backgroundColor = "orange";
+        }
+        if(shipNum==3){
+            document.getElementById(`C${pcru[0]}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcru[1]}`).style.backgroundColor = "orange";
+            document.getElementById(`C${pcru[2]}`).style.backgroundColor = "orange";
+        }
+        if(shipNum==2){
+            document.getElementById(`C${psub[0]}`).style.backgroundColor = "orange";
+            document.getElementById(`C${psub[1]}`).style.backgroundColor = "orange";
+            document.getElementById(`C${psub[2]}`).style.backgroundColor = "orange";             
+        }
         if(shipNum ==1){
             document.getElementById(`C${pdes1}`).style.backgroundColor = "orange";
             document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";
@@ -312,6 +510,8 @@
     Make computer choose divs to hit DONE
     have total destruction equal win DONE
 
+    cruiser can flip and notflip correctly.
+    destoryer does not flip correctly.
     L240-263 add cruiser to conditions
     change playership values to array
     add rotated option to placements
