@@ -19,24 +19,15 @@
         background-color: aqua;
     }
 </style>
-<body> <!--allComputerTiles to PlayTiles-->
+<body> <!--allComputerTiles to PlayTiles -->
     <h2>Computer Tiles</h2>
-    <div id="CompTiles" class="TileDiv"></div>
+    <div id="ComputerMap" class="TileDiv"></div>
     <div id="PlayerHits"></div>   
-    <button onclick="insert(0)">1</button> 
-    <button onclick="insert(1)">2</button>
-    <button onclick="insert(2)">3</button>
-    <button onclick="insert(3)">4</button>
-    <button onclick="insert(4)">5</button>
-    <button onclick="insert(5)">6</button>
-    <button onclick="insert(6)">7</button>
-    <button onclick="insert(7)">8</button>
-    <button onclick="insert(8)">9</button>
-    <button onclick="insert(9)">10</button>
+    <div id="ComputerShips">-</div>    
     <div id="extraButtons"></div> 
-    <div id="sunk">-</div>
-    <div id="computerView"></div>
-    <div id="PlayTiles" class="TileDiv"></div>
+    <div id="PlayerShips">-</div>
+    <div id="ComputerHits"></div>
+    <div id="PlayerTiles" class="TileDiv"></div>
     <h2>Player Tiles</h2>
     <!--placeFirst,second,third,fourth,fith then start-->
     <button onclick="start()">Start</button>
@@ -51,11 +42,10 @@
     <button onclick="move(10)">Down</button>
 </body>
 <script>
-    let size = 100;
-    let newbuttonsize = size-10;
+    let size = 100;   
     let text = new String;
     let array = [];
-    let compView = [];    
+    let compHits = [];    
     let playerOverlap = [];
     let compOverlap = [];
     for (let i=0;i<size;i++){
@@ -67,29 +57,34 @@
     for (let i=0;i<size;i++){
         compOrder.push(i);
     }
-    let compTiles = document.getElementById("CompTiles");
-    let playTiles = document.getElementById("PlayTiles");
+    let compTiles = document.getElementById("ComputerMap");
+    let playTiles = document.getElementById("PlayerTiles");
     for (let i=0;i<size;i++){
         let tile = document.createElement('div');
         tile.classList.add('tile')
-        tile.id = i;
+        tile.id = "C" + i;
         compTiles.append(tile);        
     }
     for (let i=0;i<size;i++){
         let tile = document.createElement('div');
         tile.classList.add('tile')
-        tile.id = "C" + i;
+        tile.id = "P" + i;
         playTiles.append(tile);        
     }
     let extraButtons = document.getElementById("extraButtons");
-    for (let i=0;i<newbuttonsize;i++){       
-        let nbv = i + 11;
-        let nbfv = i + 10;
+    for (let i=0;i<size;i++){       
+        let nbv = i + 1;
+        //let nbfv = i + 10;
         let newButton = document.createElement('button');
+        if(i<10){
+        newButton.innerHTML = "&nbsp;" + nbv + "&nbsp;";
+        }
+        else{
         newButton.innerHTML = nbv;
+        }
         newButton.id = "nB" + nbv;        
         newButton.onclick = function (){            
-            insert(nbfv);
+            fire(i);
         }
         extraButtons.append(newButton);   
         if ((i+1)%10 == 0){
@@ -109,22 +104,22 @@
     let pdes1 = 16;
     let pdes2 = 17;
 
-    document.getElementById(`C${pcar1}`).style.backgroundColor = "orange";
-    document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-    document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-    document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-    document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";    
+    document.getElementById(`P${pcar1}`).style.backgroundColor = "orange";
+    document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+    document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+    document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+    document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";    
 
     function move(num){
         if (shipNum == 5){
             if ((pcar1 + num)<=-1 || (pcar1+num-5)>=(size-1) || startS>0){
             return;
             }
-            document.getElementById(`C${pcar1}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar1}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
         
             pcar1 += num;
             pcar2 += num;
@@ -132,25 +127,25 @@
             pcar4 += num;
             pcar5 += num;
         
-            document.getElementById(`C${pcar1}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar1}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             }
         
         if (shipNum == 1){
             if((pdes1 + num)<=-1 || (pdes1+num)>=(size-1) || startS>0){
             return;
         }
-        document.getElementById(`C${pdes1}`).style.backgroundColor = "aqua";
-        document.getElementById(`C${pdes2}`).style.backgroundColor = "aqua";
+        document.getElementById(`P${pdes1}`).style.backgroundColor = "aqua";
+        document.getElementById(`P${pdes2}`).style.backgroundColor = "aqua";
     
         pdes1 += num;
         pdes2 = pdes1 + 1;
     
-        document.getElementById(`C${pdes1}`).style.backgroundColor = "orange";
-        document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";
+        document.getElementById(`P${pdes1}`).style.backgroundColor = "orange";
+        document.getElementById(`P${pdes2}`).style.backgroundColor = "orange";
        // console.log(pdes1)
        // console.log(pdes2)
         }
@@ -158,46 +153,62 @@
     let LR = true;    
     function flip(){
         console.log(LR);
-        console.log(pcar1);
+        //console.log(pcar1);
         if (shipNum == 0){
             return;
         } 
         if(LR == true){
             if(shipNum==5){
+                if(PCar[0]>55){
+                    return;
+                }
+                for(let i=1;i<5;i++){
+                    let a = PCar[i];
+                    let b = i*9;
+                    document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+                    PCar[i] += b;
+                    document.getElementById(`P${a}`).style.backgroundColor = "blue";
+                }
+                console.log(PCar);
+                LR = false;
+                return;
+            }
+            /*
+            if(shipNum==5){
             if(pcar1>55){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 += 9;
             pcar3 += 18;
             pcar4 += 27;
             pcar5 += 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = false;            
             return;
-        }
+        }*/
         if(shipNum==4){
             if(pcar1>55){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 += 9;
             pcar3 += 18;
             pcar4 += 27;
             pcar5 += 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = false;            
             return;
         }
@@ -205,18 +216,18 @@
             if(pcar1>55){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 += 9;
             pcar3 += 18;
             pcar4 += 27;
             pcar5 += 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = false;            
             return;
         }
@@ -224,18 +235,18 @@
             if(pcar1>55){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 += 9;
             pcar3 += 18;
             pcar4 += 27;
             pcar5 += 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = false;            
             return;
         }
@@ -243,9 +254,9 @@
             if(pdes1>88){
                 return;
             }
-            document.getElementById(`C${pdes2}`).style.backgroundColor = "aqua";            
+            document.getElementById(`P${pdes2}`).style.backgroundColor = "aqua";            
             pdes2 += 9;            
-            document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";            
+            document.getElementById(`P${pdes2}`).style.backgroundColor = "orange";            
             LR = false;            
             return;
         }
@@ -253,40 +264,53 @@
         }
         if(LR == false){          
             if(shipNum == 5){ 
-            if(pcar1%10>5){
+                if(PCar[0]%10>5){
+                    return;
+                }
+                for(let i=1;i<5;i++){
+                    let a = PCar[i];
+                    let b = i*9;
+                    document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+                    PCar[i] -= b;
+                    document.getElementById(`P${a}`).style.backgroundColor = "blue";
+                }
+                LR = true;
+                console.log(PCar);
+                return;
+            /*if(pcar1%10>5){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 -= 9;
             pcar3 -= 18;
             pcar4 -= 27;
             pcar5 -= 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = true;
-            return;
+            return;*/
         }
         if(shipNum == 4){//bat
             if(pcar1%10>5){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 -= 9;
             pcar3 -= 18;
             pcar4 -= 27;
             pcar5 -= 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = true;
             return;
         }
@@ -294,18 +318,18 @@
             if(pcar1%10>5){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 -= 9;
             pcar3 -= 18;
             pcar4 -= 27;
             pcar5 -= 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = true;
             return;
         }
@@ -313,18 +337,18 @@
             if(pcar1%10>5){
                 return;
             }
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
             pcar2 -= 9;
             pcar3 -= 18;
             pcar4 -= 27;
             pcar5 -= 36;
-            document.getElementById(`C${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcar5}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
             LR = true;
             return;
         }
@@ -332,9 +356,9 @@
             if(pdes1%10==9){
                 return;
             }            
-            document.getElementById(`C${pdes2}`).style.backgroundColor = "aqua";    
+            document.getElementById(`P${pdes2}`).style.backgroundColor = "aqua";    
             pdes2 -= 9;                      
-            document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";            
+            document.getElementById(`P${pdes2}`).style.backgroundColor = "orange";            
             LR = true;
             return;
         }//LR false
@@ -357,7 +381,7 @@
     }
     
     text = array;
-    compView = array.slice(0);
+    compHits = array.slice(0);
     let randomTarget = compOrder.slice(0);
 
     var shuffle = function (array) {
@@ -395,28 +419,28 @@
         }
         shipNum -= 1;
         if(shipNum ==4){
-            document.getElementById(`C${pbat[0]}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pbat[1]}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pbat[2]}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pbat[3]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pbat[0]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pbat[1]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pbat[2]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pbat[3]}`).style.backgroundColor = "orange";
         }
         if(shipNum==3){
-            document.getElementById(`C${pcru[0]}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcru[1]}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pcru[2]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcru[0]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcru[1]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcru[2]}`).style.backgroundColor = "orange";
         }
         if(shipNum==2){
-            document.getElementById(`C${psub[0]}`).style.backgroundColor = "orange";
-            document.getElementById(`C${psub[1]}`).style.backgroundColor = "orange";
-            document.getElementById(`C${psub[2]}`).style.backgroundColor = "orange";             
+            document.getElementById(`P${psub[0]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${psub[1]}`).style.backgroundColor = "orange";
+            document.getElementById(`P${psub[2]}`).style.backgroundColor = "orange";             
         }
         if(shipNum ==1){
-            document.getElementById(`C${pdes1}`).style.backgroundColor = "orange";
-            document.getElementById(`C${pdes2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pdes1}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pdes2}`).style.backgroundColor = "orange";
         }
         console.log(shipNum);
     }
-
+    let PCarHits = []
     function start(){ //only start if no ships overlap and all five ships are placed
             if(startS!==1 && shipNum == 1){
             startS = 1;
@@ -426,7 +450,7 @@
     
     let fired = [];
 
-    function insert(num){
+    function fire(num){
         if(startS !== 1){
             return;
         }
@@ -451,8 +475,8 @@
         //let ps2 = targets[3];
         //console.log(targets);
 
-       // document.getElementById(`C${ps1}`).style.backgroundColor = "orange";
-       // document.getElementById(`C${ps2}`).style.backgroundColor = "orange";
+       // document.getElementById(`P${ps1}`).style.backgroundColor = "orange";
+       // document.getElementById(`P${ps2}`).style.backgroundColor = "orange";
 
         //if(num != true){
            // return;
@@ -465,19 +489,19 @@
         document.getElementById(`${num}`).style.backgroundColor = "grey";
 
         let random = compOrder[0];
-        compView[random] = 1;
-        document.getElementById("computerView").innerHTML = compView;
+        compHits[random] = 1;
+        document.getElementById("ComputerHits").innerHTML = compHits;
         compOrder.shift();
 
-        document.getElementById(`C${random}`).style.backgroundColor = "grey";
+        document.getElementById(`P${random}`).style.backgroundColor = "grey";
         //alerts player the computer is close to victory
-        if(compView[pdes1] == 1 || compView[pdes2] == 1){ //add pcar to all pdes conditions to 263
-            document.getElementById("sunk").innerHTML = "uh-oh";
-            if(compView[pdes1] == 1){
-                document.getElementById(`C${pdes1}`).style.backgroundColor = "red";
+        if(compHits[pdes1] == 1 || compHits[pdes2] == 1){ //add pcar to all pdes conditions to 263
+            document.getElementById("PlayerShips").innerHTML = "uh-oh";
+            if(compHits[pdes1] == 1){
+                document.getElementById(`P${pdes1}`).style.backgroundColor = "red";
             }
-            if(compView[pdes2] == 1){
-                document.getElementById(`C${pdes2}`).style.backgroundColor = "red";
+            if(compHits[pdes2] == 1){
+                document.getElementById(`P${pdes2}`).style.backgroundColor = "red";
             }
         }
 
@@ -490,17 +514,18 @@
         }
 
         if(text[cs1] == 1 && text[cs2] == 1){
-            document.getElementById("sunk").innerHTML = "Comp got sunk";
+            document.getElementById("ComputerShips").innerHTML = "Comp got sunk";
             draw = draw + 1;
         }
 
-        if(compView[pdes1] == 1 && compView[pdes2] == 1){ //ps is player ship which gets hit by computer
-            document.getElementById("sunk").innerHTML = "You got sunk";
+        if(compHits[pdes1] == 1 && compHits[pdes2] == 1){ //ps is player ship which gets hit by computer
+            document.getElementById("PlayerShips").innerHTML = "You got sunk";
             draw = draw + 1;
         }
         //if there is draw, no winner is declared
         if(draw == 2){
-            document.getElementById("sunk").innerHTML = "No Winner";
+            document.getElementById("PlayerShips").innerHTML = "No Winner";
+            document.getElementById("ComputerShips").innerHTML = "No Winner";
         }
     }
     /*
@@ -520,11 +545,46 @@
     only start if no ships overlap and all five ships are placed
     */
     document.getElementById("PlayerHits").innerHTML = text;
-    document.getElementById("computerView").innerHTML = text;    
+    document.getElementById("ComputerHits").innerHTML = text;    
     shuffle(compOrder);
     shuffle(randomTarget);
 
     console.log(randomTarget);
-
+    
+    let PCar = [11,12,13,14,15];
+    let PBat = [72,73,74,75];
+    let PCru = [46,47,48];
+    let PSub = [81,82,83];
+    let PDes = [68,69];
+    let PAllS = PCar.concat(PBat,PCru,PSub,PDes);
+    console.log(PAllS)
+    for(let i=0; i<PCar.length; i++){
+        let a = PCar[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "blue";
+    }
+    for(let i=0; i<PBat.length; i++){
+        let a = PBat[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "green";
+    }
+    for(let i=0; i<PCru.length; i++){
+        let a = PCru[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "pink";
+    }
+    for(let i=0; i<PSub.length; i++){
+        let a = PSub[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "yellow";
+    }
+    for(let i=0; i<PDes.length; i++){
+        let a = PDes[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "white";
+    }
+    
+/*if LR === true{
+        if shipNum > 1  {pcar1 = pacr0+10; pbat1=pbat0+10; pcru1=pcru0+10; psub1=psub0+10; psub2 = psub0+20; pdes1=pdes0=10}
+        if shipNum > 2 {pcar2 = pcar + 20; pbat2 = pbat +20; pcru2 = pcru+20; }
+        if shipNum > 3 {pcar3 = pcar0 +30; pbat3 = pbat0 +30}
+        if shipNum > 4 {pcar4 = pcar0+40}
+        LR === false;
+        return;    */    
 </script>
 </html>
