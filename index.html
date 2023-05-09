@@ -39,7 +39,7 @@
     <button onclick="start()">Start</button>
     <br>
     <button onclick="next()">Next</button>
-    <button onclick="flip()">Flip</button>
+    <button onclick="playerFlip()">Flip</button>
     <br>
     <button onclick="move(-10)">Up</button>
     <br>
@@ -125,28 +125,7 @@
     document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";    
 
     function move2(num){
-        if (shipNum == 5){
-            if ((pcar1 + num)<=-1 || (pcar1+num-5)>=(size-1) || startS>0){
-                return;
-            }
-            document.getElementById(`P${pcar1}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
-        
-            pcar1 += num;
-            pcar2 += num;
-            pcar3 += num;
-            pcar4 += num;
-            pcar5 += num;
-        
-            document.getElementById(`P${pcar1}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
-        }
+       
         
         if (shipNum == 1){
             if((pdes1 + num)<=-1 || (pdes1+num)>=(size-1) || startS>0){
@@ -416,9 +395,9 @@
         //console.log(array);
         };
     
-    let shipNum = 5;
+    
 
-    function next(){
+    function next(){ //reverse order of shipNum from 0-4
         /* 
         let shipPlacement = [];        
         for (let i=0;i<size;i++){
@@ -452,10 +431,11 @@
             document.getElementById(`P${pdes1}`).style.backgroundColor = "orange";
             document.getElementById(`P${pdes2}`).style.backgroundColor = "orange";
         }
-        console.log(shipNum);
+       // console.log(shipNum);
     }
     
     function start(){ //only start if no ships overlap and all five ships are placed
+        //reverse order to start at 4/5
             if(startS!==1 
             //&& shipNum == 1
             ){
@@ -507,30 +487,7 @@
 
     console.log(PAllS)
 
-    for(let i=0; i<PCar.length; i++){
-        let a = PCar[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "blue";
-    }
-    for(let i=0; i<PBat.length; i++){
-        let a = PBat[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "green";
-      //  cAll.push(a);
-    }
-    for(let i=0; i<PCru.length; i++){
-        let a = PCru[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "pink";
-       // cAll.push(a);
-    }
-    for(let i=0; i<PSub.length; i++){
-        let a = PSub[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "yellow";
-     //   cAll.push(a);
-    }
-    for(let i=0; i<PDes.length; i++){
-        let a = PDes[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "white";
-       // cAll.push(a);
-    }
+    
 
     //cAll = [11,12,13,14,15,72,73,74,75,46,47,48,81,82,83,68,69];
     
@@ -692,46 +649,204 @@
         let a = cAll[i];
         document.getElementById(`C${a}`).style.backgroundColor = "orange";
     }*/
-    function move(num){
-        if (shipNum == 5){
-            if ((pcar1 + num)<=-1 || (pcar1+num-5)>=(size-1) || startS>0){
+
+    let PLorD = [0,0,0,0,0];
+    let shipNum = 0;
+    shipNum = 1; //temp
+
+    for(let i=0; i<PCar.length; i++){
+        let a = PCar[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "blue";
+    }
+    for(let i=0; i<PBat.length; i++){
+        let a = PBat[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "green";      
+    }
+    
+    function playerFlip(){
+        if(shipNum == 0){
+            if(PLorD[0]==0&&PCar[0]>55){
                 return;
             }
-            document.getElementById(`P${pcar1}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
-            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
-        
-            pcar1 += num;
-            pcar2 += num;
-            pcar3 += num;
-            pcar4 += num;
-            pcar5 += num;
-        
-            document.getElementById(`P${pcar1}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
-            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
-        }
-        
-        if (shipNum == 1){
-            if((pdes1 + num)<=-1 || (pdes1+num)>=(size-1) || startS>0){
-            return;
+            if(PLorD[0]==1&&(PCar[0]%10)>5){
+                return;
             }
-        document.getElementById(`P${pdes1}`).style.backgroundColor = "aqua";
-        document.getElementById(`P${pdes2}`).style.backgroundColor = "aqua";
-    
-        pdes1 += num;
-        pdes2 = pdes1 + 1;
-    
-        document.getElementById(`P${pdes1}`).style.backgroundColor = "orange";
-        document.getElementById(`P${pdes2}`).style.backgroundColor = "orange";
-       // console.log(pdes1)
-       // console.log(pdes2)
+            for(let i=0; i<PCar.length; i++){
+                let a = PCar[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[0]==0){
+                PCar[1] = PCar[0]+10;
+                PCar[2] = PCar[0]+20;
+                PCar[3] = PCar[0]+30;
+                PCar[4] = PCar[0]+40;
+
+                PLorD[0] = 1;
+                for(let i=0; i<PCar.length; i++){
+                    let a = PCar[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "blue";
+                }
+                return;
+            }
+            if(PLorD[0]==1){
+                PCar[1] = PCar[0]+1;
+                PCar[2] = PCar[0]+2;
+                PCar[3] = PCar[0]+3;
+                PCar[4] = PCar[0]+4;
+
+                PLorD[0] = 0;
+                for(let i=0; i<PCar.length; i++){
+                    let a = PCar[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "blue";
+                }
+                return;
+            }            
         }
+        if(shipNum == 1){
+            
+            if(PLorD[1]==0&&PBat[0]>66){
+                return;
+            }
+            if(PLorD[1]==1&&(PBat[0]%10)>6){
+                return;
+            }
+            
+            for(let i=0; i<PBat.length; i++){
+                let a = PBat[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[1]==0){
+                PBat[1] = PBat[0] + 10;
+                PBat[2] = PBat[0] + 20;
+                PBat[3] = PBat[0] + 30;                             
+
+                PLorD[1] = 1;
+                for(let i=0; i<PBat.length; i++){
+                    let a = PBat[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "green";      
+                }
+                
+                return;
+            }
+            if(PLorD[1]==1){
+                PBat[1] = PBat[0]+1;
+                PBat[2] = PBat[0]+2;
+                PBat[3] = PBat[0]+3;                            
+
+                PLorD[1] = 0;
+                for(let i=0; i<PBat.length; i++){
+                    let a = PBat[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "green";      
+                }
+                
+                return;
+            }            
+        }       
+        //console.log(PLorD);
     }
+
+    function move(num){ //move 127 PCar PBat PCru PSub PDes ** 733 colours **840 ship names
+        /*if(startS>0){ //add back
+            return;
+        }*/
+        if (shipNum == 0){   
+            if((PLorD[0]==0&&PBat[0]%10==0&&num==-1)||(PLorD[0]==0&&PBat[4]%10==9&&num==1)){
+                return;
+            }     
+            if((PLorD[0]==1&&PBat[0]%10==0&&num==-1)||(PLorD[0]==1&&PBat[0]%10==9&&num==1)){
+                return;
+            }               
+            for(let i=0; i<PCar.length; i++){
+                let a = PCar[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[0]==0){
+                if ((PCar[0] + num)<=-1 || (PCar[4]+num)>99 || (PCar[0]+num)%10>5){
+                    for(let i=0; i<PCar.length; i++){
+                    let a = PCar[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "blue";
+                    }
+                    return;
+                }
+                for(let i=0;i<PCar.length;i++){
+                    PCar[i] += num;
+                }                
+            }
+            else{
+                if ((PCar[0] + num)<=-1 || (PCar[0]+num-5)>=60 || (PCar[4]+num)>59){
+                    for(let i=0; i<PCar.length; i++){
+                        let a = PCar[i];
+                        document.getElementById(`P${a}`).style.backgroundColor = "blue";
+                    }
+                    return;
+                }
+                for(let i=0;i<PCar.length;i++){
+                    PCar[i] += num;
+                }   
+            }
+            for(let i=0; i<PCar.length; i++){
+                let a = PCar[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "blue";
+            }           
+        }        
+        if(shipNum ==1){
+            if((PLorD[1]==1&&PBat[0]%10==0&&num==-1)||(PLorD[1]==1&&PBat[0]%10==9&&num==1)){
+                return;
+            }
+            if((PLorD[1]==0&&PBat[0]%10==0&&num==-1)||(PLorD[1]==0&&PBat[3]%10==9&&num==1)){
+                return;
+            }
+            for(let i=0; i<PBat.length; i++){
+                let a = PBat[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[1]==0){
+                if ((PBat[0] + num)<=-1 || (PBat[3]+num)>99  /*||(PBat[0]+num)%10>6*/){
+                    for(let i=0; i<PBat.length; i++){
+                        let a = PBat[i];
+                        document.getElementById(`P${a}`).style.backgroundColor = "green";
+                    }
+                    return;
+                }
+                for(let i=0;i<PBat.length;i++){
+                    PBat[i] += num;
+                }                
+            }
+            else{
+                if ((PBat[0] + num)<0 || (PBat[0]+num)>69){
+                    for(let i=0; i<PBat.length; i++){
+                        let a = PBat[i];
+                        document.getElementById(`P${a}`).style.backgroundColor = "green";
+                    }
+                    return;
+                }
+                for(let i=0;i<PBat.length;i++){
+                    PBat[i] += num;
+                }   
+            }
+            for(let i=0; i<PBat.length; i++){
+                let a = PBat[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "green";
+            }       
+        }
+    }    
+    
+    for(let i=0; i<PCru.length; i++){
+        let a = PCru[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "pink";
+       // cAll.push(a);
+    }
+    for(let i=0; i<PSub.length; i++){
+        let a = PSub[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "yellow";
+     //   cAll.push(a);
+    }
+    for(let i=0; i<PDes.length; i++){
+        let a = PDes[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "white";
+       // cAll.push(a);
+    }
+
     startS = 1; //temp
     start(); //temp
     function fire(num){
