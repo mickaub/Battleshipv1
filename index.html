@@ -23,13 +23,13 @@
     <h2>Computer Tiles</h2>
     <div id="ComputerMap" class="TileDiv"></div>
     <div id="PlayerHits"></div>   
-    <div>Computer Ships: Cruiser, Battleship, Carrier, Submarine, Destroyer</div>
+    <div>Computer Ships: Carrier, Battleship, Cruiser, Submarine, Destroyer</div>
     <div id="CStatus">Status:</div>
     <div id="ComputerShips">Computer Losses:</div>
     <div id="victory">&nbsp;</div>    
     <div id="extraButtons"></div> 
     <div id="loss">&nbsp;</div>
-    <div>Player Ships: Cruiser, Battleship, Carrier, Submarine, Destroyer</div>
+    <div>Player Ships: Carrier, Battleship, Cruiser, Submarine, Destroyer</div>
     <div id="PStatus">Status:</div>
     <div id="PlayerShips">Player Losses:</div>
     <div id="ComputerHits"></div>
@@ -57,14 +57,18 @@
     let compHits = [];    
     let playerOverlap = [];
     let compOverlap = [];
+    let cPlaceOrder = [];
+    let cPlaced = [];
     for (let i=0;i<size;i++){
         blankArray.push(0);
         playerOverlap.push(0);
         compOverlap.push(0);
+        cPlaced.push(0);
     }
     let compOrder = [];
     for (let i=0;i<size;i++){
         compOrder.push(i);
+        cPlaceOrder.push(i);
     }
     let compTiles = document.getElementById("ComputerMap");
     let playTiles = document.getElementById("PlayerTiles");
@@ -104,7 +108,7 @@
     let startS = 0;
     
     let pcar1 = 0;
-    let pcar2 = 1; //switch crusier and destoryer to array
+    let pcar2 = 1; //switch crusier and destroyer to array
     let pcar3 = 2;
     let pcar4 = 3;
     let pcar5 = 4;
@@ -120,7 +124,7 @@
     document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
     document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";    
 
-    function move(num){
+    function move2(num){
         if (shipNum == 5){
             if ((pcar1 + num)<=-1 || (pcar1+num-5)>=(size-1) || startS>0){
                 return;
@@ -390,9 +394,9 @@
         */
     }
     
-    text = blankArray;
+    text = blankArray; //temp
     compHits = blankArray.slice(0);
-    let randomTarget = compOrder.slice(0);
+    //let randomTarget = compOrder.slice(0);
 
     var shuffle = function (array) {
 
@@ -462,18 +466,13 @@
     
    /*
     Allow selection of divs to place items on
-    carrier 5, battleship 4, cruiser 3, submarine 3, destroyer 2
-    Click divs to destroy/hit DONE
-    Make computer choose divs to hit DONE
-    have total destruction equal win DONE
-
+    carrier 5, battleship 4, cruiser 3, submarine 3, destroyer 2    
     cruiser can flip and notflip correctly.
     destoryer does not flip correctly.
     L240-263 add cruiser to conditions
     change playership values to array
     add rotated option to placements
-    add all ships to computer ships
-    add all computer ships to player victory conditions
+  
     only start if no ships overlap and all five ships are placed
     */
    
@@ -503,7 +502,8 @@
     document.getElementById("PlayerHits").innerHTML = text;//temp
     document.getElementById("ComputerHits").innerHTML = text;    //temp
     shuffle(compOrder);
-    shuffle(randomTarget);
+   // shuffle(randomTarget);
+    shuffle(cPlaceOrder);
 
     console.log(PAllS)
 
@@ -543,44 +543,195 @@
         compAngles.push(a);
     }
     console.log(compAngles)
+
+    function computerPlace(){
+        function PlaceCarr(){
+            for(let i=0;i<100;i++){   
+                if(compAngles[0]==0){         
+                    if(cPlaceOrder[i]%10<6){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 1;
+                        let c3 = c1 + 2;
+                        let c4 = c1 + 3;
+                        let c5 = c1 + 4;
+                        cAll.push(c1,c2,c3,c4,c5);
+                        return;
+                    }
+                }
+                else{
+                    if(cPlaceOrder[i]<60){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 10;
+                        let c3 = c1 + 20;
+                        let c4 = c1 + 30;
+                        let c5 = c1 + 40;
+                        cAll.push(c1,c2,c3,c4,c5);
+                        return;
+                    }
+                }
+            }
+        }
+        function PlaceBatt(){
+            for(let i=0;i<100;i++){   
+                if(compAngles[1]==0){         
+                    if(cPlaceOrder[i]%10<7){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 1;
+                        let c3 = c1 + 2;
+                        let c4 = c1 + 3;
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1&&cAll.indexOf(c3)==-1&&cAll.indexOf(c4)==-1)                        
+                        {
+                            cAll.push(c1,c2,c3,c4);
+                            return;
+                        }
+                    }
+                }
+                else{
+                    if(cPlaceOrder[i]<70){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 10;
+                        let c3 = c1 + 20;
+                        let c4 = c1 + 30; 
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1&&cAll.indexOf(c3)==-1&&cAll.indexOf(c4)==-1){
+                            cAll.push(c1,c2,c3,c4);
+                            return;
+                        }                    
+                    }
+                }
+            }
+        }
+        function PlaceCru(){
+            for(let i=0;i<100;i++){   
+                if(compAngles[2]==0){         
+                    if(cPlaceOrder[i]%10<8){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 1;
+                        let c3 = c1 + 2;                        
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1&&cAll.indexOf(c3)==-1)
+                        {
+                            cAll.push(c1,c2,c3);
+                            return;
+                        }
+                    }
+                }
+                else{
+                    if(cPlaceOrder[i]<80){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 10;
+                        let c3 = c1 + 20;                        
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1&&cAll.indexOf(c3)==-1){
+                            cAll.push(c1,c2,c3);
+                            return;
+                        }                    
+                    }
+                }
+            }
+        }
+        function PlaceSub(){
+            for(let i=0;i<100;i++){   
+                if(compAngles[3]==0){         
+                    if(cPlaceOrder[i]%10<8){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 1;
+                        let c3 = c1 + 2;                        
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1&&cAll.indexOf(c3)==-1)
+                        {
+                            cAll.push(c1,c2,c3);
+                            return;
+                        }
+                    }
+                }
+                else{
+                    if(cPlaceOrder[i]<80){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 10;
+                        let c3 = c1 + 20;                        
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1&&cAll.indexOf(c3)==-1){
+                            cAll.push(c1,c2,c3);
+                            return;
+                        }                    
+                    }
+                }
+            }
+        }
+        function PlaceDest(){
+            for(let i=0;i<100;i++){   
+                if(compAngles[4]==0){         
+                    if(cPlaceOrder[i]%10<9){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 1;                                               
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1)
+                        {
+                            cAll.push(c1,c2);
+                            return;
+                        }
+                    }
+                }
+                else{
+                    if(cPlaceOrder[i]<90){
+                        let c1 = cPlaceOrder[i];
+                        let c2 = c1 + 10;                                                
+                        if(cAll.indexOf(c1)==-1&&cAll.indexOf(c2)==-1){
+                            cAll.push(c1,c2);
+                            return;
+                        }                    
+                    }
+                }
+            }
+        }
+        PlaceCarr();
+        PlaceBatt();
+        PlaceCru();
+        PlaceSub();
+        PlaceDest();
+    }
+    computerPlace();
+   // console.log(cPlaceOrder[0],87%10);
     
-    if(compAngles[0]==0){
-        cAll.push(11,12,13,14,15);
-    }
-    else{
-        cAll.push(11,21,31,41,51);
-    }
-    if(compAngles[1]==0){
-        cAll.push(72,73,74,75);
-    }
-    else{
-        cAll.push(72,62,52,42);
-    }
-    if(compAngles[2]==0){
-        cAll.push(46,47,48);
-    }
-    else{
-        cAll.push(46,56,66);
-    }
-    if(compAngles[3]==0){
-        cAll.push(81,82,83);
-    }
-    else{
-        cAll.push(81,71,61);
-    }
-    if(compAngles[4]==0){
-        cAll.push(68,69);
-    }
-    else{
-        cAll.push(68,78);
-    }
-    console.log(cAll);
-    
-    for(let i=0;i<cAll.length;i++){//computer ship tiles
+  /*  for(let i=0;i<cAll.length;i++){//computer ship tiles
         let a = cAll[i];
         document.getElementById(`C${a}`).style.backgroundColor = "orange";
+    }*/
+    function move(num){
+        if (shipNum == 5){
+            if ((pcar1 + num)<=-1 || (pcar1+num-5)>=(size-1) || startS>0){
+                return;
+            }
+            document.getElementById(`P${pcar1}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "aqua";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "aqua";
+        
+            pcar1 += num;
+            pcar2 += num;
+            pcar3 += num;
+            pcar4 += num;
+            pcar5 += num;
+        
+            document.getElementById(`P${pcar1}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar2}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar3}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar4}`).style.backgroundColor = "orange";
+            document.getElementById(`P${pcar5}`).style.backgroundColor = "orange";
+        }
+        
+        if (shipNum == 1){
+            if((pdes1 + num)<=-1 || (pdes1+num)>=(size-1) || startS>0){
+            return;
+            }
+        document.getElementById(`P${pdes1}`).style.backgroundColor = "aqua";
+        document.getElementById(`P${pdes2}`).style.backgroundColor = "aqua";
+    
+        pdes1 += num;
+        pdes2 = pdes1 + 1;
+    
+        document.getElementById(`P${pdes1}`).style.backgroundColor = "orange";
+        document.getElementById(`P${pdes2}`).style.backgroundColor = "orange";
+       // console.log(pdes1)
+       // console.log(pdes2)
+        }
     }
-
     startS = 1; //temp
     start(); //temp
     function fire(num){
