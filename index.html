@@ -35,11 +35,12 @@
     <div id="ComputerHits"></div>
     <div id="PlayerTiles" class="TileDiv"></div>
     <h2>Player Tiles</h2>
-    <!--placeFirst,second,third,fourth,fith then start-->
+    <div id="instruct">Move and Flip Carrier then press Next</div>
+    <br>
     <button onclick="start()">Start</button>
     <br>
     <button onclick="next()">Next</button>
-    <button onclick="playerFlip()">Flip</button>
+    <button onclick="playerFlip()">Flip</button>    
     <br>
     <button onclick="move(-10)">Up</button>
     <br>
@@ -462,7 +463,7 @@
     let PCar = [11,12,13,14,15];
     let PBat = [72,73,74,75];
     let PCru = [46,47,48];
-    let PSub = [81,82,83];
+    let PSub = [61,62,63];
     let PDes = [68,69];
     let PAllS = PCar.concat(PBat,PCru,PSub,PDes);
     let cAll = [];
@@ -652,7 +653,7 @@
 
     let PLorD = [0,0,0,0,0];
     let shipNum = 0;
-    shipNum = 1; //temp
+    shipNum = 0; //temp
 
     for(let i=0; i<PCar.length; i++){
         let a = PCar[i];
@@ -662,8 +663,23 @@
         let a = PBat[i];
         document.getElementById(`P${a}`).style.backgroundColor = "green";      
     }
+    for(let i=0; i<PCru.length; i++){
+        let a = PCru[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "pink";     
+    }
+    for(let i=0; i<PSub.length; i++){
+        let a = PSub[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "yellow";
+    }
+    for(let i=0; i<PDes.length; i++){
+        let a = PDes[i];
+        document.getElementById(`P${a}`).style.backgroundColor = "white";       
+    }
     
-    function playerFlip(){
+    function playerFlip(){ //move 748
+        if(shipNum>4){
+            return;
+        }
         if(shipNum == 0){
             if(PLorD[0]==0&&PCar[0]>55){
                 return;
@@ -742,10 +758,108 @@
                 return;
             }            
         }       
+        if(shipNum == 2){
+            if(PLorD[2]==0 && PCru[0]>77){
+                return;
+            }
+            if(PLorD[2]==1 && (PCru[0]%10)>7){
+                return;
+            }
+            for(let i=0; i<PCru.length;i++){
+                let a = PCru[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[2]==0){
+                PCru[1] = PCru[0] + 10;
+                PCru[2] = PCru[0] + 20;
+
+                PLorD[2] = 1;
+                for(let i=0; i<PCru.length;i++){
+                    let a = PCru[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "pink";
+                }
+                return;
+            }
+            if(PLorD[2]==1){
+                PCru[1] = PCru[0] + 1;
+                PCru[2] = PCru[0] + 2;
+
+                PLorD[2] = 0;
+                for(let i=0; i<PCru.length;i++){
+                    let a = PCru[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "pink";
+                }
+                return;
+            }
+        }
+        if(shipNum == 3){
+            if(PLorD[3]==0 && PSub[0]>77){
+                return;
+            }
+            if(PLorD[3]==1 && (PSub[0]%10)>7){
+                return;
+            }
+            for(let i=0; i<PSub.length; i++){
+                let a = PSub[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[3]==0){
+                PSub[1] = PSub[0] + 10;
+                PSub[2] = PSub[0] + 20;
+
+                PLorD[3] = 1;
+                for(let i=0; i<PSub.length; i++){
+                    let a = PSub[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "yellow";
+                }
+                return;
+            }
+            if(PLorD[3]==1){
+                PSub[1] = PSub[0] + 1;
+                PSub[2] = PSub[0] + 2;
+
+                PLorD[3] = 0;
+                for(let i=0; i<PSub.length;i++){
+                    let a = PSub[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "yellow";
+                }
+                return;
+            }
+        }
+        if(shipNum==4){
+            if(PLorD[4]==0 && PDes[0]>88){
+                return;
+            }
+            if(PLorD[4]==1 && (PDes[0]%10)>8){
+                return;
+            }
+            for(let i=0;i<PDes.length;i++){
+                let a = PDes[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[4]==0){
+                PDes[1] = PDes[0] + 10;
+                PLorD[4] = 1;
+                for(let i=0;i<PDes.length;i++){
+                    let a = PDes[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "white";
+                }
+                return;
+            }
+            if(PLorD[4]==1){
+                PDes[1] = PDes[0] + 1;
+                PLorD[4] = 0;
+                for(let i=0;i<PDes.length;i++){
+                    let a = PDes[i];
+                    document.getElementById(`P${a}`).style.backgroundColor = "white";
+                }
+                return;
+            }
+        }
         //console.log(PLorD);
     }
 
-    function move(num){ //move 127 PCar PBat PCru PSub PDes ** 733 colours **840 ship names
+    function move(num){ //move 127 PCar PBat PCru PSub PDes ** 733 colours **840 ship names **playerflip 666
         /*if(startS>0){ //add back
             return;
         }*/
@@ -831,21 +945,9 @@
         }
     }    
     
-    for(let i=0; i<PCru.length; i++){
-        let a = PCru[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "pink";
-       // cAll.push(a);
-    }
-    for(let i=0; i<PSub.length; i++){
-        let a = PSub[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "yellow";
-     //   cAll.push(a);
-    }
-    for(let i=0; i<PDes.length; i++){
-        let a = PDes[i];
-        document.getElementById(`P${a}`).style.backgroundColor = "white";
-       // cAll.push(a);
-    }
+    
+    
+    
 
     startS = 1; //temp
     start(); //temp
