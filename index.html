@@ -943,6 +943,75 @@
                 document.getElementById(`P${a}`).style.backgroundColor = "green";
             }       
         }
+        if(shipNum==2){//pink PCru
+            //add two edges
+            for(let i=0; i<PCru.length; i++){
+                let a = PCru[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[2]==0){
+              //  if(){}//addlimits
+              for(let i=0;i<PCru.length;i++){
+                PCru[i] += num;
+              }
+            }
+            else{
+                //  if(){}//addlimits
+              for(let i=0;i<PCru.length;i++){
+                PCru[i] += num;
+              }
+            }
+            for(let i=0; i<PCru.length; i++){
+                let a = PCru[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "pink";
+            }
+        }
+        if(shipNum==3){//yellow PSub
+            //add two edges
+            for(let i=0; i<PSub.length; i++){
+                let a = PSub[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[3]==0){
+               // if(){}//addlimits
+               for(let i=0;i<PSub.length;i++){
+                PSub[i] += num;
+              }
+            }
+            else{
+                // if(){}//addlimits
+               for(let i=0;i<PSub.length;i++){
+                PSub[i] += num;
+              }
+            }
+            for(let i=0; i<PSub.length; i++){
+                let a = PSub[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "yellow";
+            }
+        }
+        if(shipNum==4){//white PDes
+            //add two edges
+            for(let i=0; i<PDes.length; i++){
+                let a = PDes[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "aqua";
+            }
+            if(PLorD[4]==0){
+               // if(){}//addlimits
+               for(let i=0;i<PDes.length;i++){
+                PDes[i] += num;
+              }
+            }
+            else{
+                // if(){}//addlimits
+               for(let i=0;i<PDes.length;i++){
+                PDes[i] += num;
+              }
+            }
+            for(let i=0; i<PDes.length; i++){
+                let a = PDes[i];
+                document.getElementById(`P${a}`).style.backgroundColor = "white";
+            }
+        }
     }    
     
     
